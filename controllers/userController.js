@@ -19,6 +19,14 @@ const createUser = async (req, res, next) => {
 const getUsers = async (req, res, next) => {
     const {query} = req.query;
 
+    if(!query) {
+        res.status(400).json({
+            status: 'fail',
+            message: 'query must not be empty'
+        });
+        return;
+    }
+
     const users = await User.find({$text: {$search: query}});
 
 
